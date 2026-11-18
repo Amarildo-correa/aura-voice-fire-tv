@@ -1,0 +1,40 @@
+schema-version = 1
+
+[package]
+title = "Voice Input Probe"
+version = "0.1.0"
+# Floor so local builds pass vpt validate; pass an increasing --build-number for every Appstore upload.
+build-number = 1
+id = "com.amarildo.voicepoc"
+
+[os.version]
+min = "2.0"
+target = "2.0"
+
+[needs]
+# Plano B: captura de microfone (PCM) por app de terceiro (prompt em runtime).
+[[needs.privilege]]
+id = "com.amazon.audio.privilege.microphone.access"
+
+[wants]
+[[wants.module]]
+id = "/com.amazon.kepler.net.net_manager@INetManager"
+
+# Required to observe remote button events via TVEventHandler/useTVEventHandler.
+[[wants.service]]
+id = "com.amazon.inputd.service"
+
+# Serviços de áudio do sistema (captura via keplerscript-audio-lib).
+[[wants.service]]
+id = "com.amazon.audio.control"
+[[wants.service]]
+id = "com.amazon.audio.stream"
+[[wants.service]]
+id = "com.amazon.audio.system"
+
+[components]
+[[components.interactive]]
+id = "com.amarildo.voicepoc.main"
+runtime-module = "/com.amazon.kepler.runtime.react_native_kepler_4@IReactNativeKepler_0"
+launch-type = "singleton"
+categories = ["com.amazon.category.main"]

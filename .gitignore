@@ -1,0 +1,25 @@
+# Segredos — NUNCA versionar
+api
+.dg.env
+*.key
+*.pem
+
+# Dependências e artefatos de build
+node_modules/
+build/
+dist/
+release/
+out/
+*.vpkg
+buildinfo.json
+doctor.txt
+
+# package-lock gerado com --legacy-peer-deps quebra o ESLint do build
+package-lock.json
+
+# Relay — áudios capturados e logs
+server/caps/
+*.log
+
+# Sistema
+.DS_Store
