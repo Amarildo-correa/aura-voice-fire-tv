@@ -28,9 +28,11 @@ npm run build:release          # gera build/armv7-release/*.vpkg
 Relay de STT (no PC):
 
 ```
-export DEEPGRAM_API_KEY=<sua-chave>     # ou crie um arquivo .dg.env (ignorado pelo git)
+cp .env.example .env     # preencha DEEPGRAM_API_KEY com sua chave real
 python3 server/stt_server.py 8899
 ```
+
+O `.env` guarda a chave real e **não é versionado** (está no `.gitignore`); o `.env.example`, sem valores, é o modelo versionado. O relay carrega o `.env` sozinho (`load_dotenv()` em `server/stt_server.py`) — o código nunca contém a chave, só a variável `DEEPGRAM_API_KEY`.
 
 O app aponta para o relay em `app/src/App.tsx` (`RELAY = http://<ip-do-pc>:8899`). Em produção, troque por um endpoint de STT na nuvem (HTTPS).
 

@@ -3,6 +3,27 @@
 # Fase 1: stub (devolve tamanho). STT real plugado depois em transcribe().
 import http.server, json, os, time, sys, subprocess, threading
 
+
+def load_dotenv(path=None):
+    # Carrega KEY=valor de um .env simples (sem dependência externa), sem
+    # sobrescrever variáveis já exportadas no ambiente. O arquivo .env não
+    # é versionado (ver .gitignore); use .env.example como modelo.
+    path = path or os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env")
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                k, v = line.split("=", 1)
+                k, v = k.strip(), v.strip().strip('"').strip("'")
+                os.environ.setdefault(k, v)
+    except FileNotFoundError:
+        pass
+
+
+load_dotenv()
+
 # Pre-stage o script de BACK no device uma vez (reduz latencia: so 1 vda shell).
 STAGE = (
     "export PATH=/root/vega/bin:$PATH; "
